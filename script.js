@@ -87,22 +87,31 @@ function go(n){cur=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.class
 function auto(){clearInterval(timer);if(!matchMedia("(prefers-reduced-motion:reduce)").matches)timer=setInterval(()=>go(cur+1),4500)}
 slides.forEach((s,i)=>{const b=document.createElement("button");b.setAttribute("aria-label","Photo "+(i+1));b.onclick=()=>{go(i);auto()};dots.appendChild(b)});
 go(0);auto();
-/* ===== Paiement Wave ===== */
+/* ===== Paiement Wave (remplace l'ancien bloc Wave) ===== */
 const WAVE_NUM="785379494";   // numéro Wave (sans espaces)
-const WAVE_LINK="";           // si vous avez un lien de paiement Wave Business, collez-le ici (vous pouvez y mettre {montant})
-document.body.insertAdjacentHTML("beforeend",'<div id="toast" role="status"></div>');
-function say(t){
-  if(dlg.open){$("er").textContent=t;$("er").classList.add("ok");return}
-  const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(say.t);say.t=setTimeout(()=>e.classList.remove("on"),8000);
+const WAVE_LINK="";           // lien de paiement Wave Business (facultatif, vous pouvez y mettre {montant})
+const wnum=WAVE_NUM.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/,"$1 $2 $3 $4");
+$("sd").insertAdjacentHTML("afterend",'<button type="button" class="btn white send" id="pw">💸 Commander et payer avec Wave</button><div class="wvbox" id="wvb" hidden></div>');
+function buildOrder(pay){
+  const m=mode(),ad=$("ad").value.trim();
+  if(m==="Livraison"&&!ad){$("er").textContent="Merci d’indiquer votre adresse de livraison.";$("ad").focus();return null}
+  const tot=ord.q*ord.unit;
+  const L=["Bonjour Emirka, je voudrais commander :","",`• ${ord.q} × ${ord.name} (${ord.price}) = ${fmt(tot)}`];
+  (OPTS[ord.cat]||OPTS["Fast food"]).forEach(([t],i)=>L.push(`   - ${t} : ${document.querySelector(`input[name="o${i}"]:checked`).value}`));
+  const rm=$("rm").value.trim(),cn=$("cn").value.trim();
+  if(rm)L.push(`   - Remarque : ${rm}`);
+  L.push("",`Mode : ${m}`);if(m==="Livraison")L.push(`Adresse : ${ad}`);
+  if(cn)L.push(`Nom : ${cn}`);
+  L.push(`Paiement : ${pay}`,`Total : ${fmt(tot)}`);
+  return `https://wa.me/${WA}?text=${encodeURIComponent(L.join("\n"))}`;
 }
-function payWave(amount){
-  if(WAVE_LINK){window.open(WAVE_LINK.replace("{montant}",amount||""),"_blank","noopener");return}
-  const n=WAVE_NUM.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/,"$1 $2 $3 $4");
-  const how=`Ouvrez Wave et envoyez ${amount?fmt(amount):"le montant"} au ${n}.`;
-  (navigator.clipboard?navigator.clipboard.writeText(WAVE_NUM):Promise.reject()).then(()=>say(`Numéro copié. ${how}`),()=>say(how));
-}
-dlg.addEventListener("close",()=>$("er").classList.remove("ok"));
-$("sd").insertAdjacentHTML("afterend",'<button type="button" class="btn white send" id="pw">💸 Payer avec Wave</button>');
-$("pw").onclick=()=>{const r=$("rm");if(!/Wave/.test(r.value))r.value=(r.value?r.value+" · ":"")+"Paiement par Wave";payWave(ord.q*ord.unit)};
-const bar=document.querySelector(".order .cta");
-if(bar){bar.insertAdjacentHTML("beforeend",'<button type="button" class="btn wv" id="pw2">💸 Payer avec Wave</button>');$("pw2").onclick=()=>payWave()}
+$("sd").onclick=()=>{const u=buildOrder("à la réception");if(!u)return;window.open(u,"_blank","noopener");dlg.close()};
+$("pw").onclick=()=>{
+  const tot=ord.q*ord.unit,u=buildOrder(`par Wave, je paie ${fmt(tot)} au ${wnum}`);if(!u)return;
+  if(navigator.clipboard)navigator.clipboard.writeText(WAVE_NUM).catch(()=>{});
+  window.open(u,"_blank","noopener");
+  const b=$("wvb");
+  b.innerHTML=`<b>✅ Commande envoyée sur WhatsApp.</b><br>Payez maintenant <b>${fmt(tot)}</b> par Wave au <b>${wnum}</b> (numéro copié), puis envoyez-nous la capture d’écran du paiement sur WhatsApp.`+(WAVE_LINK?`<a class="btn wv" href="${WAVE_LINK.replace("{montant}",tot)}" target="_blank" rel="noopener">Ouvrir Wave</a>`:"");
+  b.hidden=false;
+};
+dlg.addEventListener("close",()=>{$("wvb").hidden=true;$("wvb").innerHTML=""});
