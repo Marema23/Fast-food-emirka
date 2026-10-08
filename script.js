@@ -27,7 +27,7 @@ const PICS=[["Fataya","Fataya-emirka.jpg"],
 const pic=n=>(PICS.find(([k])=>n.startsWith(k))||[])[1];
 const tabs=document.getElementById("tabs"),box=document.getElementById("grid");
 const slug=k=>"cat-"+k.toLowerCase().replace(/\s+/g,"-");
-const card=([e,n,d,p])=>{const i=pic(n);return `<div class="item"><div class="vis">${i?`<img src="images/${i}" alt="${n}" loading="lazy">`:`<span class="em" aria-hidden="true">${e}</span>`}<span class="price">${p}</span></div><div class="tx"><h3>${n}</h3><p>${d}</p></div></div>`};
+const card=([e,n,d,p])=>{const i=pic(n);return `<div class="item"><div class="vis">${i?`<img src="${i}" alt="${n}" loading="lazy">`:`<span class="em" aria-hidden="true">${e}</span>`}<span class="price">${p}</span></div><div class="tx"><h3>${n}</h3><p>${d}</p></div></div>`};
 box.innerHTML=Object.keys(MENU).map(k=>`<h3 class="cat" id="${slug(k)}">${k}</h3><div class="grid">${MENU[k].map(card).join("")}</div>`).join("");
 Object.keys(MENU).forEach(k=>{const a=document.createElement("a");a.className="tab";a.href="#"+slug(k);a.textContent=k;tabs.appendChild(a)});
 
