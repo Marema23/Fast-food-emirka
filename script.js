@@ -87,3 +87,22 @@ function go(n){cur=(n+slides.length)%slides.length;slides.forEach((s,i)=>s.class
 function auto(){clearInterval(timer);if(!matchMedia("(prefers-reduced-motion:reduce)").matches)timer=setInterval(()=>go(cur+1),4500)}
 slides.forEach((s,i)=>{const b=document.createElement("button");b.setAttribute("aria-label","Photo "+(i+1));b.onclick=()=>{go(i);auto()};dots.appendChild(b)});
 go(0);auto();
+/* ===== Paiement Wave ===== */
+const WAVE_NUM="785379494";   // numéro Wave (sans espaces)
+const WAVE_LINK="";           // si vous avez un lien de paiement Wave Business, collez-le ici (vous pouvez y mettre {montant})
+document.body.insertAdjacentHTML("beforeend",'<div id="toast" role="status"></div>');
+function say(t){
+  if(dlg.open){$("er").textContent=t;$("er").classList.add("ok");return}
+  const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(say.t);say.t=setTimeout(()=>e.classList.remove("on"),8000);
+}
+function payWave(amount){
+  if(WAVE_LINK){window.open(WAVE_LINK.replace("{montant}",amount||""),"_blank","noopener");return}
+  const n=WAVE_NUM.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/,"$1 $2 $3 $4");
+  const how=`Ouvrez Wave et envoyez ${amount?fmt(amount):"le montant"} au ${n}.`;
+  (navigator.clipboard?navigator.clipboard.writeText(WAVE_NUM):Promise.reject()).then(()=>say(`Numéro copié. ${how}`),()=>say(how));
+}
+dlg.addEventListener("close",()=>$("er").classList.remove("ok"));
+$("sd").insertAdjacentHTML("afterend",'<button type="button" class="btn white send" id="pw">💸 Payer avec Wave</button>');
+$("pw").onclick=()=>{const r=$("rm");if(!/Wave/.test(r.value))r.value=(r.value?r.value+" · ":"")+"Paiement par Wave";payWave(ord.q*ord.unit)};
+const bar=document.querySelector(".order .cta");
+if(bar){bar.insertAdjacentHTML("beforeend",'<button type="button" class="btn wv" id="pw2">💸 Payer avec Wave</button>');$("pw2").onclick=()=>payWave()}
