@@ -116,3 +116,18 @@ dialog input[type=text],dialog textarea{display:block;width:100%;margin-top:4px;
 .tot b{font-weight:400;font-size:30px;color:var(--red)}
 .send{width:100%;text-align:center}
 .hint{color:var(--red);margin:8px 0 0;min-height:1em;font-size:14px}
+/* ===== Menu : 2 plats par ligne sur téléphone ===== */
+@media(max-width:700px){
+.grid{grid-template-columns:1fr 1fr;gap:12px}
+.item{border-radius:16px;box-shadow:3px 3px 0 var(--bd)}
+.vis{aspect-ratio:1/1}
+.em{font-size:56px}
+.price{top:6px;right:6px;font-size:14px;padding:2px 8px;border-width:2px;border-radius:9px}
+.tx{padding:10px 10px 12px}
+.item h3{font-size:17px}
+.item p{font-size:12px}
+.tx{display:flex;flex-direction:column;flex:1}
+.item p{margin-bottom:8px}
+.cmd{display:block;width:100%;margin-top:auto;padding:5px 8px;font-size:15px;text-align:center}
+.cat{font-size:28px;margin:30px 0 14px}
+}
