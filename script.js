@@ -42,7 +42,7 @@ document.body.insertAdjacentHTML("beforeend",`<dialog id="dlg" aria-labelledby="
 <div class="dh"><div class="dv" id="dv"></div><div><h3 id="dn"></h3><p id="dp"></p></div></div>
 <div class="row"><span class="lb">Quantité</span><div class="qty"><button type="button" id="qm" aria-label="Moins">−</button><output id="qn">1</output><button type="button" id="qp" aria-label="Plus">+</button></div></div>
 <div id="ops"></div>
-<fieldset><legend>Mode</legend><div class="seg"><label><input type="radio" name="mode" value="Livraison" checked><span>Livraison</span></label><label><input type="radio" name="mode" value="Sur place ou à emporter"><span>Sur place / à emporter</span></label></div></fieldset>
+<fieldset><legend>Mode</legend><div class="seg"><label><input type="radio" name="mode" value="Livraison" checked><span>Livraison</span></label><label><input type="radio" name="mode" value=""><span>A Récupérer</span></label></div></fieldset>
 <label class="f" id="adl">Adresse de livraison<input type="text" id="ad" placeholder="Quartier, rue, repère…"></label>
 <label class="f">Votre nom<input type="text" id="cn" placeholder="Ex : Awa"></label>
 <label class="f">Remarque (facultatif)<textarea id="rm" rows="2" placeholder="Ex : bien cuit, sans oignons"></textarea></label>
