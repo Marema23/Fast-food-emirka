@@ -23,8 +23,8 @@ const MENU={
  ]
 };
 const PICS=[["Fataya","Fataya-emirka.jpg"],
-["Local","local-emirka.jpg"],["Burger","Burger-emirka.jpg"],["Tacos","Tacos-emirka.jpg"],["Shawarma","shawarma-emirka.jpg"],["Sandwich","Sandwich-emirka.jpg"],["Vermicelle","Vermicelle-emirka.jpeg"],["Macaroni viande fromage","Macaronie-emirka.jpg"],["Macaroni","Fritte-emirka.jpg"]];
-const pic=n=>(PICS.find(([k])=>n.startsWith(k))||[])[1];
+["Local","local-emirka.jpg"],["Burger","Burger-emirka.jpg"],["Tacos","Tacos-emirka.jpg"],["Shawarma","shawarma-emirka.jpg"],["Sandwich","Sandwich-emirka.jpg"],["Vermi","Vermicelle-emirka.jpeg"],["Macaroni viande fromage","Macaronie-emirka.jpg"],["Macaroni","Fritte-emirka.jpg"]];
+const pic=n=>(PICS.find(([k])=>n.toLowerCase().startsWith(k.toLowerCase()))||[])[1];
 const tabs=document.getElementById("tabs"),box=document.getElementById("grid");
 const slug=k=>"cat-"+k.toLowerCase().replace(/\s+/g,"-");
 const card=([e,n,d,p])=>{const i=pic(n);return `<div class="item"><div class="vis">${i?`<img src="${i}" alt="${n}" loading="lazy">`:`<span class="em" aria-hidden="true">${e}</span>`}<span class="price">${p}</span></div><div class="tx"><h3>${n}</h3><p>${d}</p></div></div>`};
