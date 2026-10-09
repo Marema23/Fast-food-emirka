@@ -22,7 +22,7 @@ const MENU={
   ["🍝","Macaroni viande fromage jus","Macaroni, viande, sauce, frites, mayonnaise, fromage, jus au choix","2 500 F"]
  ]
 };
-const PICS=[["Fataya","Fataya-emirka.jpg"],
+const PICS=[["Fataya","FATAYA-emirka.jpeg"],
 ["Local","local-emirka.jpg"],["Burger","Burger-emirka.jpg"],["Tacos","Tacos-emirka.jpg"],["Shawarma","shawarma-emirka.jpg"],["Sandwich","Sandwich-emirka.jpg"],["Vermi","Vermicelle-emirka.jpeg"],["Macaroni viande fromage","Macaronie-emirka.jpg"],["Macaroni","Fritte-emirka.jpg"]];
 const pic=n=>(PICS.find(([k])=>n.toLowerCase().startsWith(k.toLowerCase()))||[])[1];
 const tabs=document.getElementById("tabs"),box=document.getElementById("grid");
