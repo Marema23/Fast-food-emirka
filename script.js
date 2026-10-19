@@ -16,8 +16,8 @@ const MENU={
   ["🥖","Sandwich complet","Grand pain, viande, sauce, frites, mayonnaise, œuf, fromage","1 500 F"]
  ],
  "Plats":[
-  ["🍗","Vermicelle poulet sauce","Vermicelles, poulet, sauce","2 300 F"],
-  ["🍗","Vermicelle poulet sauce jus","Vermicelles, poulet, sauce, jus","2 500 F"],
+  ["🍗","Vermicelle poulet sauce","Vermicelles, poulet, sauce","2 500 F"],
+  ["🍗","Vermicelle poulet sauce jus","Vermicelles, poulet, sauce, jus","3 000 F"],
   ["🍝","Macaroni viande","Macaroni, viande, sauce, frites, mayonnaise","2 000 F"],
   ["🍝","Macaroni viande fromage jus","Macaroni, viande, sauce, frites, mayonnaise, fromage, jus au choix","2 500 F"]
  ]
